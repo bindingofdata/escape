@@ -138,3 +138,42 @@ def generate_map():
             room_map[room_height - 1][middle_column] = floor_type
             room_map[room_height - 1][middle_column + 1] = floor_type
             room_map[room_height - 1][middle_column - 1] = floor_type
+
+##############
+## EXPLORER ##
+##############
+
+def draw():
+    global room_height, room_width, room_map
+    generate_map()
+    screen.clear()
+
+    for y in range(room_height):
+        for x in range(room_width):
+            image_to_draw = DEMO_OBJECTS[room_map[y][x]]
+            screen.blit(image_to_draw,
+                (top_left_x + (x * 30),
+                top_left_y + (y * 30) - image_to_draw.get_height()))
+            
+def movement():
+    global current_room
+    old_room = current_room
+
+    if keyboard.left:
+        current_room -= 1
+    elif keyboard.right:
+        current_room += 1
+    elif keyboard.up:
+        current_room -= MAP_WIDTH
+    elif keyboard.down:
+        current_room += MAP_WIDTH
+
+    if current_room > 50:
+        current_room = 50
+    elif current_room < 1:
+        current_room = 1
+
+    if current_room != old_room:
+        print("Entering room" + str(current_room))
+
+clock.schedule_interval(movement, 0.1)
