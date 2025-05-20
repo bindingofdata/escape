@@ -121,7 +121,7 @@ objects = {
     41: [images.mission_control_desk, images.mission_control_desk_shadow, "Mission Control stations."],
     42: [images.button, images.button_shadow, "The button for opening the time-locked door in Engineering."],
     43: [images.whiteboard, images.full_shadow, "The whiteboard is used in brainstorms and planning meetings."],
-    44: [images.window, imges.full_shadow, "The window provides a view out onto the planet surface."],
+    44: [images.window, images.full_shadow, "The window provides a view out onto the planet surface."],
     45: [images.robot, images.robot_shadow, "A cleaning robot, turned off."],
     46: [images.robot2, images.robot2_shadow, "A planet surface exploratiom robot, awaiting set-up."],
     47: [images.rocket, images.rocket_shadow, "A 1-person craft in repair."],
@@ -319,7 +319,7 @@ def draw():
 
     for y in range(room_height):
         for x in range(room_width):
-            image_to_draw = image_to_draw[room_map[y][x]][0]
+            image_to_draw = objects[room_map[y][x]][0]
             screen.blit(image_to_draw,
                 (top_left_x + (x * 30),
                 top_left_y + (y * 30) - image_to_draw.get_height()))
