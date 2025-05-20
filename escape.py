@@ -161,6 +161,10 @@ objects = {
     81: [images.access_card, None, "This access card belongs to " + FRIEND2_NAME + ".", "an access card"],
 }
 
+items_player_may_carry = list(range(53, 82))
+# Numbers below are for floor, pressure pad, soil, toxic floor
+items_player_may_stand_on = items_player_may_carry + [0, 39, 2, 48]
+
 ##############
 ## MAKE MAP ##
 ##############
