@@ -239,6 +239,20 @@ assert check_counter == 161, "Expected 161 scenery items, got " + str(check_coun
 assert checksum == 200095, "Error in scene data."
 print("Scenery checksum: " + str(checksum))
 
+for room in range(1, 26): # Add random scenery to exterior rooms
+    if room != 13: # Skip room 13
+        scenery_item = random.choice([16, 28, 29, 30]) # shrub, small rock, large rock, crater
+        scenery[room] = [[scenery_item, random.randint(2, 10), random.randint(2, 10)]]
+
+# Add fencing around the outside of the map
+for room_coordinate in range(0,13): # Exterior rooms are 13x13
+    for room_number in [1, 2, 3, 4, 5]: # Top of map
+        scenery[room_number] += [[31, 0, room_coordinate]]
+    for room_number in [1, 6, 11, 16, 21]: # Left of map
+        scenery[room_number] += [[31, room_coordinate, 0]]
+    for room_number in [5, 10, 15, 20, 25]: # Right of map
+        scenery[room_number] += [[31, room_coordinate, 12]]
+
 ##############
 ## MAKE MAP ##
 ##############
