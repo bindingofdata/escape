@@ -26,6 +26,8 @@ LANDER_SECTOR = random.randint(1, 24)
 LANDER_X = random.randint(2, 11)
 LANDER_Y = random.randint(2, 11)
 
+TILE_SIZE = 30
+
 #############
 ##   MAP   ##
 #############
@@ -321,6 +323,20 @@ def generate_map():
             room_map[room_height - 1][middle_column] = floor_type
             room_map[room_height - 1][middle_column + 1] = floor_type
             room_map[room_height - 1][middle_column - 1] = floor_type
+
+    if current_room in scenery:
+        for this_scenery in scenery[current_room]:
+            scenery_number = this_scenery[0]
+            scenery_y = this_scenery[1]
+            scenery_x = this_scenery[2]
+            room_map[scenery_y][scenery_x] = scenery_number
+
+            image_here = objects[scenery_number][0]
+            image_width = image_here.get_width()
+            image_width_in_tiles = int(image_width / TILE_SIZE)
+
+            for tile_number in range(1, image_width_in_tiles):
+                room_map[scenery_y][scenery_x + tile_number] = 255
 
 ##############
 ## EXPLORER ##
