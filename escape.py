@@ -49,7 +49,7 @@ PLAYER = {
 player_direction = "down"
 player_frame = 0
 player_image = PLAYER[player_direction][player_frame]
-plauer_offset_x, player_offset_y = 0, 0
+player_offset_x, player_offset_y = 0, 0
 
 #############
 ##   MAP   ##
@@ -377,5 +377,8 @@ def draw():
                 screen.blit(image_to_draw,
                     (top_left_x + (x * 30),
                     top_left_y + (y * 30) - image_to_draw.get_height()))
-
-clock.schedule_interval(movement, 0.1)
+        if player_y == y:
+            image_to_draw = PLAYER[player_direction][player_frame]
+            screen.blit(image_to_draw,
+                (top_left_x + (player_x * 30) + (player_offset_x * 30),
+                top_left_y + (player_y * 30) + (player_offset_y * 30) - image_to_draw.get_height()))
