@@ -28,6 +28,29 @@ LANDER_Y = random.randint(2, 11)
 
 TILE_SIZE = 30
 
+player_y, player_x = 2, 5
+game_over = False
+
+PLAYER = {
+    "left": [images.spacesuit_left, images.spacesuit_left_1,
+             images.spacesuit_left_2, images.spacesuit_left_3,
+             images.spacesuit_left_4],
+    "right": [images.spacesuit_right, images.spacesuit_right_1,
+              images.spacesuit_right_2, images.spacesuit_right_3,
+              images.spacesuit_right_4],
+    "up": [images.spacesuit_back, images.spacesuit_back_1,
+           images.spacesuit_back_2, images.spacesuit_back_3,
+           images.spacesuit_back_4],
+    "down": [images.spacesuit_front, images.spacesuit_front_1,
+             images.spacesuit_front_2, images.spacesuit_front_3,
+             images.spacesuit_front_4]
+}
+
+player_direction = "down"
+player_frame = 0
+player_image = PLAYER[player_direction][player_frame]
+plauer_offset_x, player_offset_y = 0, 0
+
 #############
 ##   MAP   ##
 #############
