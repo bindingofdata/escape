@@ -22,7 +22,9 @@ current_room = STARTING_ROOM
 top_left_x = 100
 top_left_y = 150
 
-DEMO_OBJECTS = [images.floor, images.pillar, images.soil]
+LANDER_SECTOR = random.randint(1, 24)
+LANDER_X = random.randint(2, 11)
+LANDER_Y = random.randint(2, 11)
 
 #############
 ##   MAP   ##
@@ -69,6 +71,26 @@ GAME_MAP += [
 
 # simple sanity check on the map above to check data entry
 assert len(GAME_MAP) - 1 == MAP_SIZE, "Map size and GAME_MAP don't match."
+
+#############
+## OBJECTS ##
+#############
+
+objects = {
+    0: [images.floor, None, "The floor is shiny and clean."],
+    1: [images.pillar, images.full_shadow, "The wall is smooth and cold."],
+    2: [images.soil, None, "It's like a desert. Or should that be a dessert?"],
+    3: [images.pillar_low, images.half_shadow, "The wall is smooth and cold."],
+    4: [images.bed, images.half_shadow, "A tidy and comfortable bed."],
+    5: [images.table, images.half_shadow, "It's made from strong plastic."],
+    6: [images.chair_left, None, "A chair with a soft cushion."],
+    7: [images.chair_right, None, "A chair with a soft cushion."],
+    8: [images.bookcase_tall, images.full_shadow, "Bookshelves, stacked with reference books."],
+    9: [images.bookcase_small, images.half_shadow, "Bookshelves, stacked with reference books."],
+    10: [images.cabinet, images.half_shadow, "A small locker, for storing personal items."],
+    11: [images.desk_computer, images.half_shadow, "A computer. Use it to run life support diagnostics."],
+    12: [images.plant, images.plant_shadow, "A spaceberry plant, grown here."]
+}
 
 ##############
 ## MAKE MAP ##
@@ -150,7 +172,7 @@ def draw():
 
     for y in range(room_height):
         for x in range(room_width):
-            image_to_draw = DEMO_OBJECTS[room_map[y][x]]
+            image_to_draw = image_to_draw[room_map[y][x]][0]
             screen.blit(image_to_draw,
                 (top_left_x + (x * 30),
                 top_left_y + (y * 30) - image_to_draw.get_height()))
