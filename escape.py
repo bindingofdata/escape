@@ -361,6 +361,71 @@ def generate_map():
             for tile_number in range(1, image_width_in_tiles):
                 room_map[scenery_y][scenery_x + tile_number] = 255
 
+###############
+## GAME LOOP ##
+###############
+
+def game_loop():
+    global player_x, player_y, current_room
+    global from_player_x, from_player_y
+    global player_image, player_image_shadow
+    global player_offset_x, player_offset_y
+    global player_frame, player_direction
+
+    if game_over:
+        return
+    
+    if player_frame > 0:
+        player_frame += 1
+        time.sleep(0.05)
+        if player_frame == 5:
+            player_frame = 0
+            player_offset_x = 0
+            player_offset_y = 0
+
+# Save player'scurrent position
+    old_player_x = player_x
+    old_player_y = player_y
+
+# Move if key is pressed
+    if player_frame == 0:
+        from_player_x = player_x
+        from_player_y = player_y
+
+        # Diagonal movement not supported
+        if keyboard.right:
+            player_x += 1
+            player_direction = "right"
+            player_frame = 1
+        elif keyboard.left:
+            player_x -= 1
+            player_direction = "left"
+            player_frame = 1
+        elif keyboard.up:
+            player_y -= 1
+            player_direction = "up"
+            player_frame = 1
+        elif keyboard.down:
+            player_y += 1
+            player_direction = "down"
+            player_frame = 1
+
+    # Prevent moving to illegal tiles
+    if room_map[player_y][player_x] not in items_player_may_stand_on:
+        #or hazard_map[player_y][player_x] != 0:
+        player_x = old_player_x
+        player_y = old_player_y
+        player_frame = 0
+
+    if player_direction == "right" and player_frame > 0:
+        player_offset_x = -1 + (0.25 * player_frame)
+    if player_direction == "left" and player_frame > 0:
+        player_offset_x = 1 - (0.25 * player_frame)
+    if player_direction == "up" and player_frame > 0:
+        player_offset_y = 1 - (0.25 * player_frame)
+    if player_direction == "down" and player_frame > 0:
+        player_offset_y = -1 + (0.25 * player_frame)
+
 ##############
 ## EXPLORER ##
 ##############
