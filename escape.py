@@ -349,30 +349,10 @@ def draw():
 
     for y in range(room_height):
         for x in range(room_width):
-            image_to_draw = objects[room_map[y][x]][0]
-            screen.blit(image_to_draw,
-                (top_left_x + (x * 30),
-                top_left_y + (y * 30) - image_to_draw.get_height()))
-            
-def movement():
-    global current_room
-    old_room = current_room
-
-    if keyboard.left:
-        current_room -= 1
-    elif keyboard.right:
-        current_room += 1
-    elif keyboard.up:
-        current_room -= MAP_WIDTH
-    elif keyboard.down:
-        current_room += MAP_WIDTH
-
-    if current_room > 50:
-        current_room = 50
-    elif current_room < 1:
-        current_room = 1
-
-    if current_room != old_room:
-        print("Entering room" + str(current_room))
+            if room_map[y][x] != 255:
+                image_to_draw = objects[room_map[y][x]][0]
+                screen.blit(image_to_draw,
+                    (top_left_x + (x * 30),
+                    top_left_y + (y * 30) - image_to_draw.get_height()))
 
 clock.schedule_interval(movement, 0.1)
