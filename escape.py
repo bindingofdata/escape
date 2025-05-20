@@ -410,6 +410,47 @@ def game_loop():
             player_direction = "down"
             player_frame = 1
 
+# Check for room transitions
+    if player_x == room_width: # Right exit
+        #clock.unschedule(hazard_move)
+        current_room += 1
+        generate_map()
+        player_x = 0 # Enter at left
+        player_y = int(room_height / 2) # Enter at middle
+        player_frame = 0
+        #start_room()
+        return
+    
+    if player_x == -1: # Left exit
+        #clock.unschedule(hazard_move)
+        current_room -= 1
+        generate_map()
+        player_x = room_width - 1 # Enter at right
+        player_y = int(room_height / 2) # Enter at middle
+        player_frame = 0
+        #start_room()
+        return
+    
+    if player_y == room_height: # Bottom exit
+        #clock.unschedule(hazard_move)
+        current_room += MAP_WIDTH
+        generate_map()
+        player_y = 0 # Enter in middle
+        player_x = int(room_width / 2) # Enter at top
+        player_frame = 0
+        #start_room()
+        return
+    
+    if player_y == -1: # Top exit
+        #clock.unschedule(hazard_move)
+        current_room -= MAP_WIDTH
+        generate_map()
+        player_y = room_height - 1 # Enter at bottom
+        player_x = int(room_width / 2) # Enter in middle
+        player_frame = 0
+        #start_room()
+        return
+
     # Prevent moving to illegal tiles
     if room_map[player_y][player_x] not in items_player_may_stand_on:
         #or hazard_map[player_y][player_x] != 0:
