@@ -497,30 +497,9 @@ def game_loop():
     if player_direction == "down" and player_frame > 0:
         player_offset_y = -1 + (0.25 * player_frame)
 
-##############
-## EXPLORER ##
-##############
-
-def draw():
-    global room_height, room_width, room_map
-    generate_map()
-    screen.clear()
-
-    for y in range(room_height):
-        for x in range(room_width):
-            if room_map[y][x] != 255:
-                image_to_draw = objects[room_map[y][x]][0]
-                screen.blit(image_to_draw,
-                    (top_left_x + (x * 30),
-                    top_left_y + (y * 30) - image_to_draw.get_height()))
-        if player_y == y:
-            image_to_draw = PLAYER[player_direction][player_frame]
-            screen.blit(image_to_draw,
-                (top_left_x + (player_x * 30) + (player_offset_x * 30),
-                top_left_y + (player_y * 30) + (player_offset_y * 30) - image_to_draw.get_height()))
-
 ###########
 ## START ##
 ###########
 
 clock.schedule_interval(game_loop, 0.03)
+generate_map()
