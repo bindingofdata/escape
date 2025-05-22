@@ -402,6 +402,9 @@ def generate_map():
 ## GAME LOOP ##
 ###############
 
+def start_room():
+    show_text("You are here: " + room_name, 0)
+
 def game_loop():
     global player_x, player_y, current_room
     global from_player_x, from_player_y
@@ -455,7 +458,7 @@ def game_loop():
         player_x = 0 # Enter at left
         player_y = int(room_height / 2) # Enter at middle
         player_frame = 0
-        #start_room()
+        start_room()
         return
     
     if player_x == -1: # Left exit
@@ -465,7 +468,7 @@ def game_loop():
         player_x = room_width - 1 # Enter at right
         player_y = int(room_height / 2) # Enter at middle
         player_frame = 0
-        #start_room()
+        start_room()
         return
     
     if player_y == room_height: # Bottom exit
@@ -475,7 +478,7 @@ def game_loop():
         player_y = 0 # Enter in middle
         player_x = int(room_width / 2) # Enter at top
         player_frame = 0
-        #start_room()
+        start_room()
         return
     
     if player_y == -1: # Top exit
@@ -485,7 +488,7 @@ def game_loop():
         player_y = room_height - 1 # Enter at bottom
         player_x = int(room_width / 2) # Enter in middle
         player_frame = 0
-        #start_room()
+        start_room()
         return
 
     # Prevent moving to illegal tiles
