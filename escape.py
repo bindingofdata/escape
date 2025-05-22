@@ -391,6 +391,13 @@ def generate_map():
             for tile_number in range(1, image_width_in_tiles):
                 room_map[scenery_y][scenery_x + tile_number] = 255
 
+    center_y = int(HEIGHT / 2)
+    center_x = int(WIDTH / 2)
+    room_pixel_width = room_width * TILE_SIZE
+    room_pixel_height = room_height * TILE_SIZE
+    top_left_x = center_x - 0.5 * room_pixel_width
+    top_left_y = (center_y - 0.5 * room_pixel_height) + 100
+
 ###############
 ## GAME LOOP ##
 ###############
