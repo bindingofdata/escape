@@ -657,6 +657,21 @@ in_my_pockets = [55]
 selected_item = 0 # The first item
 item_carrying = in_my_pockets[selected_item]
 
+#######################
+## PROP INTERACTIONS ##
+#######################
+
+def find_object_start_x():
+    checker_x = player_x
+    while room_map[player_y][player_x] == 255:
+        checker_x -= 1
+    return checker_x
+
+def get_item_under_player():
+    item_x = find_object_start_x()
+    item_player_is_on = room_map[player_y][item_x]
+    return item_player_is_on
+
 ###########
 ## START ##
 ###########
