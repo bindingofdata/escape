@@ -587,6 +587,19 @@ def draw():
     
     screen.surface.set_clip(None)
 
+def adjust_wall_transparency():
+    global wall_transparency_frame
+
+    if (player_y == room_height - 2
+         and room_map[room_height - 1][player_x] == 1
+         and wall_transparency_frame < 4):
+        wall_transparency_frame += 1 # Fade wall out
+
+    if ((player_y < room_height - 2
+         or room_map[room_height - 1][player_x] != 1)
+         and wall_transparency_frame > 0):
+        wall_transparency_frame -= 1 # Fade wall in
+
 
 ###########
 ## START ##
@@ -594,3 +607,4 @@ def draw():
 
 clock.schedule_interval(game_loop, 0.03)
 generate_map()
+clock.schedule_interval(adjust_wall_transparency, 0.05)
