@@ -398,6 +398,19 @@ def generate_map():
     top_left_x = center_x - 0.5 * room_pixel_width
     top_left_y = (center_y - 0.5 * room_pixel_height) + 100
 
+    for prop_number, prop_info in props.items():
+        prop_room = prop_info[0]
+        prop_y = prop_info[1]
+        prop_x = prop_info[2]
+        if (prop_room == current_room
+            and room_map[prop_y][prop_x] in [0, 39, 2]):
+            room_map[prop_y][prop_x] = prop_number
+            image_here = objects[prop_number][0]
+            image_width = image_here.get_width()
+            image_width_in_tiles = int(image_width / TILE_SIZE)
+            for tile_number in range(1, image_width_in_tiles):
+                room_map[prop_y][prop_x + tile_number] = 255
+
 ###############
 ## GAME LOOP ##
 ###############
