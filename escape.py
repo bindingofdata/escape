@@ -504,6 +504,9 @@ def game_loop():
         start_room()
         return
 
+    if keyboard.g:
+        pick_up_object()
+
     # Prevent moving to illegal tiles
     if room_map[player_y][player_x] not in items_player_may_stand_on:
         #or hazard_map[player_y][player_x] != 0:
