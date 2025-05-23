@@ -422,6 +422,7 @@ def game_loop():
     global player_x, player_y, current_room
     global from_player_x, from_player_y
     global player_image, player_image_shadow
+    global selected_item, item_carrying, energy
     global player_offset_x, player_offset_y
     global player_frame, player_direction
 
@@ -506,6 +507,19 @@ def game_loop():
 
     if keyboard.g:
         pick_up_object()
+
+    if keyboard.tab and len(in_my_pockets) > 0:
+        selected_item += 1
+        if selected_item > len(in_my_pockets) - 1:
+            selected_item = 0
+        item_carrying = in_my_pockets[selected_item]
+        display_inventory()
+
+    if keyboard.d and item_carrying:
+        drop_object(old_player_x, old_player_y)
+
+    if keyboard.space:
+        exampine_object()
 
     # Prevent moving to illegal tiles
     if room_map[player_y][player_x] not in items_player_may_stand_on:
@@ -656,7 +670,7 @@ assert len(props) == 37, "Expected 37 prop items."
 print("Props checksum: " + str(checksum))
 assert checksum == 61414, "Error in prop data."
 
-in_my_pockets = [55]
+in_my_pockets = [55, 59, 61, 64, 65, 66, 67] * 3
 selected_item = 0 # The first item
 item_carrying = in_my_pockets[selected_item]
 
@@ -696,9 +710,6 @@ def add_object(item): # Adds item to inventory.
     props[item][0] = 0 # Carried items go into room 0 (off the mp)
 
 def display_inventory():
-    print(in_my_pockets)
-
-def display_inventory():
     box = Rect((0,45), (800,105))
     screen.draw.filled_rect(box, BLACK)
 
@@ -728,4 +739,4 @@ def display_inventory():
 clock.schedule_interval(game_loop, 0.03)
 generate_map()
 clock.schedule_interval(adjust_wall_transparency, 0.05)
-clock.schedule_interval(display_inventory, 1)
+clock.schedule_unique(display_inventory, 1)
