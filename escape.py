@@ -698,6 +698,29 @@ def add_object(item): # Adds item to inventory.
 def display_inventory():
     print(in_my_pockets)
 
+def display_inventory():
+    box = Rect((0,45), (800,105))
+    screen.draw.filled_rect(box, BLACK)
+
+    if len(in_my_pockets) == 0:
+        return
+    
+    start_display = (selected_item // 16) * 16
+    list_to_show = in_my_pockets[start_display : start_display + 16]
+    selected_marker = selected_item % 16
+
+    for item_counter in range(len(list_to_show)):
+        item_number = list_to_show[item_counter]
+        image = objects[item_number][0]
+        screen.blit(image, (25 + (46 * item_counter), 90))
+
+    box_left = (selected_marker * 46) - 3
+    box = Rect((22 + box_left, 85), (40, 40))
+    screen.draw.rect(box, WHITE)
+    item_highlighted = in_my_pockets[selected_item]
+    description = objects[item_highlighted][2]
+    screen.draw.text(description, (20, 130), color="white")
+
 ###########
 ## START ##
 ###########
@@ -705,3 +728,4 @@ def display_inventory():
 clock.schedule_interval(game_loop, 0.03)
 generate_map()
 clock.schedule_interval(adjust_wall_transparency, 0.05)
+clock.schedule_interval(display_inventory, 1)
