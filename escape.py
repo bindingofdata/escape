@@ -671,7 +671,7 @@ assert len(props) == 37, "Expected 37 prop items."
 print("Props checksum: " + str(checksum))
 assert checksum == 61414, "Error in prop data."
 
-in_my_pockets = [55, 59, 61, 64, 65, 66, 67] * 3
+in_my_pockets = [55]
 selected_item = 0 # The first item
 item_carrying = in_my_pockets[selected_item]
 
