@@ -577,7 +577,7 @@ def draw():
             draw_image(objects[floor_type][0], y, x)
             # Next line allows shadows to fall on top of objects on the floor
             if room_map[y][x] in items_player_may_stand_on:
-                draw_shadow(objects[room_map[y][x]][0], y, x)
+                draw_image(objects[room_map[y][x]][0], y, x)
 
     # Pressure pad from room 26 is drawn here, so props can go on top of it
     if current_room == 26:
@@ -595,15 +595,14 @@ def draw():
 
                 if (current_room in outdoor_rooms
                     and y == room_height - 1
-                    and room_map[y][x] == 1) \
-                    or (current_room not in outdoor_rooms
-                        and y == room_height - 1
-                        and room_map[y][x] == 1
-                        and x > 0
-                        and x < room_width - 1):
+                    and room_map[y][x] == 1) or \
+                    (current_room not in outdoor_rooms
+                    and y == room_height - 1
+                    and room_map[y][x] == 1
+                    and x > 0
+                    and x < room_width - 1):
                     # Add transparent wall image in the front row
                     image = PILLARS[wall_transparency_frame]
-
                 draw_image(image, y, x)
 
                 if objects[item_here][1] is not None: # If there is a shadow
