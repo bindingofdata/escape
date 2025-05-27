@@ -514,12 +514,13 @@ def game_loop():
             selected_item = 0
         item_carrying = in_my_pockets[selected_item]
         display_inventory()
+        time.sleep(0.1) # Prevent rapid cycling through items
 
     if keyboard.d and item_carrying:
-        drop_object(old_player_x, old_player_y)
+        drop_object(old_player_y, old_player_x)
 
     if keyboard.space:
-        exampine_object()
+        examine_object()
 
     # Prevent moving to illegal tiles
     if room_map[player_y][player_x] not in items_player_may_stand_on:
@@ -731,6 +732,33 @@ def display_inventory():
     item_highlighted = in_my_pockets[selected_item]
     description = objects[item_highlighted][2]
     screen.draw.text(description, (20, 130), color="white")
+
+def drop_object(old_y, old_x):
+    global room_map, props
+    if room_map[old_y][old_x] in [0,2,39]: # Floor, soil, pressure pad
+        props[item_carrying][0] = current_room
+        props[item_carrying][1] = old_y
+        props[item_carrying][2] = old_x
+        room_map[old_y][old_x] = item_carrying
+        show_text("You have dropped " + objects[item_carrying][3], 0)
+        sounds.drop.play()
+        remove_object(item_carrying)
+        time.sleep(0.5)
+    else: # Prop already dropped at this location
+        show_text("You can't drop that here!", 0)
+        time.sleep(0.5)
+
+def remove_object(item): # Takes item out of inventory.
+    global selected_item, in_my_pockets, item_carrying
+    in_my_pockets.remove(item)
+    selected_item -= 1
+    if selected_item < 0:
+        selected_item = 0
+    if len(in_my_pockets) == 0: # No items being carried
+        item_carrying = False
+    else:
+        item_carrying = in_my_pockets[selected_item]
+    display_inventory()
 
 ###########
 ## START ##
