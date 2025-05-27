@@ -759,6 +759,25 @@ def remove_object(item): # Takes item out of inventory.
         item_carrying = in_my_pockets[selected_item]
     display_inventory()
 
+def examine_object():
+    item_player_is_on = get_item_under_player()
+    left_tile_of_item = find_object_start_x()
+    if item_player_is_on in [0,2]: # Don't describe floor or soil
+        return
+    description = f"You are standing on {objects[item_player_is_on][2]}."
+    for prop_number, details in props.items():
+        # Props = object number: [room, y, x]
+        if details[0] == current_room: # if prop is in this room
+            # If the prop is hidden
+            if (details[1] == player_y
+                and details[2] == left_tile_of_item
+                and room_map[details[1][details[2]]] != prop_number):
+                add_object(prop_number)
+                description = f"You found {objects[prop_number][3]}"
+                sounds.combine.play()
+    show_text(description, 0)
+    time.sleep(0.5)
+
 ###########
 ## START ##
 ###########
